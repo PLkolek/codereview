@@ -1,8 +1,9 @@
 angular.module('app.exampleApp').controller("ExampleCtrl", [
   '$scope',
-  ($scope)->
+  'File'
+  ($scope, File)->
     console.log 'ExampleCtrl running'
 
-    $scope.exampleValue = "Hello angular and rails"
+    $scope.lines = File.query()
 
 ])

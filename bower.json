@@ -2,7 +2,8 @@
   "lib": {
     "name": "bower-rails generated lib assets",
     "dependencies": {
-        "angular": "latest"        
+        "angular": "latest",
+        "angular-resource": "latest"
     }
   },
   "vendor": {
