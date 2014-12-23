@@ -4,6 +4,6 @@ angular.module('app.exampleApp').controller("ExampleCtrl", [
   ($scope, File)->
     console.log 'ExampleCtrl running'
 
-    $scope.lines = File.query()
+    $scope.parts = File.query()
 
 ])

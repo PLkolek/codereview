@@ -38,3 +38,4 @@ gem 'spring',        group: :development
 
 gem 'angular-rails-templates'
 gem 'bower-rails'
+gem 'haml'

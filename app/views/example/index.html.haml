@@ -1,0 +1,3 @@
+%div{'ng-app' => 'app.exampleApp', 'ng-controller' => 'ExampleCtrl'}
+  .code-window
+    %pre{'class' => '{{part.type}}', 'ng-repeat' => 'part in parts'} {{part.lines}}
