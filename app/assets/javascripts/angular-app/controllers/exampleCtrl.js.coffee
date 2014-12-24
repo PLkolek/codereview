@@ -5,5 +5,5 @@ angular.module('app.exampleApp').controller("ExampleCtrl", [
     console.log 'ExampleCtrl running'
 
     $scope.lines = File.query()
-
+    $scope.addComment = () -> this.line.inputOpened = true
 ])

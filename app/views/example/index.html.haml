@@ -1,3 +1,5 @@
 %div{'ng-app' => 'app.exampleApp', 'ng-controller' => 'ExampleCtrl'}
   .code-window
-    %pre{'class' => '{{line.type}}', 'ng-repeat' => 'line in lines'} {{line.text}}
+    .line{:'ng-repeat' => 'line in lines'}
+      %pre{:'class' => '{{line.type}}', :'ng-dblclick'=>'addComment()'} {{line.text}}
+      %input{:'ng-if' => 'line.inputOpened'}
