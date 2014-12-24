@@ -1,18 +1,12 @@
 class FileController < ApplicationController
   def index
     respond_to do |format|
-      format.json { render :json => [{
-                                         :lines => "aaa\nbbb\nccc\n",
-                                         :type => :no_changes
-                                     },
-                                     {
-                                         :lines => "Those lines were removed\nSeriously\n",
-                                         :type => :removed
-                                     },
-                                     {
-                                         :lines => "And this one was added",
-                                         :type => :added
-                                     }]
+      format.json { render :json => [{:text => "aaa", :type => :no_changes},
+                                     {:text => "bbb", :type => :no_changes},
+                                     {:text => "ccc", :type => :no_changes},
+                                     {:text => "Those lines were removed", :type => :removed},
+                                     {:text => "Seriously", :type => :removed},
+                                     {:text => "And this one was added", :type => :added}]
                   }
     end
   end
