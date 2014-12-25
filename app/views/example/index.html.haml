@@ -1,5 +1,9 @@
-%div{'ng-app' => 'app.exampleApp', 'ng-controller' => 'ExampleCtrl'}
+%div(ng-app = 'app.exampleApp' ng-controller = 'ExampleCtrl')
   .code-window
-    .line{:'ng-repeat' => 'line in lines'}
-      %pre{:'class' => '{{line.type}}', :'ng-dblclick'=>'addComment()'} {{line.text}}
-      %input{:'ng-if' => 'line.inputOpened'}
+    .line(ng-repeat='line in lines' ng-dblclick='addComment()')
+      %pre(class='{{line.type}}') {{line.text}}
+      %pre.comment(ng-if='commentVisible()') {{line.comment}}
+      %textarea(ng-if='line.inputOpened'
+                ng-blur='hide()'
+                cr-focusme='line.hasFocus'
+                ng-model='line.comment')

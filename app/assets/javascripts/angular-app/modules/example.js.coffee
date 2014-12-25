@@ -1,6 +1,6 @@
 @exampleApp = angular
   .module('app.exampleApp', [
-    # additional dependencies here
+    'ngResource'
   ])
   .run(->
     console.log 'exampleApp running'

@@ -1,4 +1,4 @@
-angular.module 'app.exampleApp', ['ngResource']
+angular.module 'app.exampleApp'
   .factory 'File',
   [
     '$resource',
