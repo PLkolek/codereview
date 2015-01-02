@@ -1,0 +1,33 @@
+grammar SvnDiff
+  rule diff
+    file* <Diff>
+  end
+
+  rule file
+    index separator_line header chunk+ <File>
+  end
+
+  rule index
+   'Index: ' (!"\n" .)* "\n" <Index>
+  end
+
+  rule separator_line
+    "="* "\n" <SeparatorLine>
+  end
+
+  rule header
+    (!"\n" .)* "\n" (!"\n" .)* "\n" <Header>
+  end
+
+  rule chunk
+    "@@ -" range " +" range " @@\n" line* <Chunk>
+  end
+
+  rule line
+    ('+' / '-' / ' ') (!"\n" .)* "\n" <Line>
+  end
+
+  rule range
+    [0-9]+ "," [0-9]+
+  end
+end

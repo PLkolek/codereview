@@ -1,5 +1,9 @@
 class FileController < ApplicationController
   def index
+    parsed = DiffParser.parse(%x(svn diff -r 15826:15827 http://svn.wildfiregames.com/public/ps/trunk/source/))
+    logger.debug(parsed.inspect)
+    logger.debug(parsed.elements.last.inspect)
+    logger.debug(parsed.elements.last.text_value)
     respond_to do |format|
       format.json { render :json => [{:no => 1, :text => "aaa", :type => :no_changes, :comment => ''},
                                      {:no => 2, :text => "bbb", :type => :no_changes, :comment => ''},
