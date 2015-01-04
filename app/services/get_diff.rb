@@ -4,25 +4,25 @@ class GetDiff
     chunks = parsed.elements.first.elements.drop 3
     result=[]
     for chunk in chunks
-      line_new=line_old=chunk.first_line_number
-      if chunk.first_line_number>1
-        result << {:type => :more}
-      end
-      for line in chunk.elements
-        result<< {:type => line.type, :old_no=>line_old, :new_no=>line_new,  :text=>line.content, :comment=>''}
-        case line.type
-          when :no_changes
-            line_new+=1
-            line_old+=1
-          when :added
-            line_new+=1
-          when :removed
-            line_old+=1
-        end
-      end
+      result.concat(transform_chunk(chunk))
     end
     #FIXME: if line.last_line < total lines
     result << {:type => :more}
+    result
+  end
+
+  def transform_chunk(chunk)
+    result=[]
+    line_new=line_old=chunk.first_line_number
+    if chunk.first_line_number>1
+      result << {:type => :more}
+    end
+    for parsed_line in chunk.elements
+      line = Line.new(parsed_line.content, parsed_line.type, line_new, line_old, '')
+      result<<line.to_hash
+      line_new+=1 if line.type.inNew
+      line_old+=1 if line.type.inOld
+    end
     result
   end
 end
