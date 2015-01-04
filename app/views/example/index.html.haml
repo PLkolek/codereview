@@ -1,8 +1,8 @@
-%div(ng-app = 'app.exampleApp' ng-controller = 'ExampleCtrl')
+#main(ng-app = 'app.exampleApp' ng-controller = 'ExampleCtrl')
   .code-window
     .line(ng-repeat='line in lines' ng-dblclick='addComment()')
       .code(ng-if='isCode()')
-        %pre(class='{{line.type}}') {{line.no}}. {{line.text}}
+        %pre(class='{{line.type}}') {{line.old_no}}. {{line.new_no}}. {{line.text}}
         %pre.comment(ng-if='commentVisible()') {{line.comment}}
         %textarea(ng-if='line.inputOpened'
                   ng-blur='hide()'
