@@ -11,11 +11,13 @@ angular.module('app.exampleApp').controller("ExampleCtrl", [
       this.line.hasFocus = true
     $scope.hide = () ->
       this.line.inputOpened = false
-    $scope.commentVisible = ()-> !this.line.inputOpened && this.line.comment!=''
+    $scope.commentVisible = ()-> this.isCode() && !this.line.inputOpened && this.line.comment!=''
     $scope.isCode = () -> this.line.type!='more'
     $scope.isShowMore = () -> !this.isCode()
     $scope.showMore = () ->
       index = this.lines.indexOf(this.line)
       ShowMore.query((res)->
         Array.prototype.splice.apply($scope.lines, [index, 1].concat(res)))
+    $scope.hasOldNo = () -> this.line.old_no?
+    $scope.hasNewNo = () -> this.line.new_no?
 ])

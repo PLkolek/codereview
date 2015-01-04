@@ -1,12 +1,16 @@
 #main(ng-app = 'app.exampleApp' ng-controller = 'ExampleCtrl')
-  .code-window
-    .line(ng-repeat='line in lines' ng-dblclick='addComment()')
-      .code(ng-if='isCode()')
-        %pre(class='{{line.type}}') {{line.old_no}}. {{line.new_no}}. {{line.text}}
+  %table.code-window
+    %tr.line(ng-repeat='line in lines' ng-dblclick='addComment()')
+      %td
+        %pre(ng-if='isCode() && hasOldNo()' class='{{line.type}}') {{line.old_no}}.
+      %td
+        %pre(ng-if='isCode() && hasNewNo()' class='{{line.type}}') {{line.new_no}}.
+      %td
+        %pre(ng-if='isCode()' class='{{line.type}}') {{line.text}}
         %pre.comment(ng-if='commentVisible()') {{line.comment}}
         %textarea(ng-if='line.inputOpened'
                   ng-blur='hide()'
                   cr-focusme='line.hasFocus'
                   ng-model='line.comment')
-      .show-more(ng-if='isShowMore()')
-        %a(ng-click='showMore()') Show more
+        .show-more(ng-if='isShowMore()')
+          %a(ng-click='showMore()') Show more
