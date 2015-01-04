@@ -6,7 +6,7 @@ angular.module 'app.exampleApp'
     ($resource) ->
       $resource('files/showMore.json', {},
         query:
-          method: 'GET'
+          method: 'POST'
           isArray: true
       )
   ]

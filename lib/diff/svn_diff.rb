@@ -20,6 +20,10 @@ module SvnDiff
     def first_line_number
       CHUNK_HEADER_REGEXP.match(text_value.lines.first)[1].to_i
     end
+    def last_line_number
+      match = CHUNK_HEADER_REGEXP.match(text_value.lines.first)
+      match[1].to_i+match[2].to_i
+    end
   end
 
   class Line < Treetop::Runtime::SyntaxNode

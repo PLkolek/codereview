@@ -16,8 +16,8 @@ angular.module('app.exampleApp').controller("ExampleCtrl", [
     $scope.isShowMore = () -> !this.isCode()
     $scope.showMore = () ->
       index = this.lines.indexOf(this.line)
-      ShowMore.query((res)->
-        Array.prototype.splice.apply($scope.lines, [index, 1].concat(res)))
+      ShowMore.query({ from: this.line.from, to: this.line.to },
+        (res)-> Array.prototype.splice.apply($scope.lines, [index, 1].concat(res)))
     $scope.hasOldNo = () -> this.line.old_no?
     $scope.hasNewNo = () -> this.line.new_no?
 ])
