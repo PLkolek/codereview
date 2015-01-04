@@ -4,10 +4,10 @@ class GetDiff
     chunks = parsed.elements.first.elements.drop 3
     result=[]
     last_chunk_end=1
-    for chunk in chunks
+    chunks.each { |chunk|
       result.concat(transform_chunk(chunk, last_chunk_end))
       last_chunk_end=chunk.old_end
-    end
+    }
     #FIXME: if line.last_line < total lines
     result << {:type => :more, :from=>last_chunk_end, :to=>99999999}
     result
