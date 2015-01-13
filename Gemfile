@@ -40,3 +40,4 @@ gem 'bower-rails'
 gem 'haml-rails'
 gem 'treetop'
 gem 'angular_rails_csrf'
+gem 'rails_12factor', group: :production
