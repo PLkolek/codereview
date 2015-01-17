@@ -14,17 +14,13 @@ class Review < ActiveRecord::Base
     .map {|line, no| Line.new(line, :no_changes, no+from+old_new_difference, no+from, '').to_hash}
   end
 
-  #TODO: that should go to another class...
   private
   def diff_command
-    revision = revisions.first.number
-    "svn diff -r #{revision-1}:#{revision}  #{url}"
+    SvnCommand.diff(url, revisions.first.number)
   end
 
   def cat_command
-    revision = revisions.first.number-1
-    file=text_files.first.name
-    "svn cat -r #{revision} #{url}#{file}"
+    SvnCommand.cat(url, text_files.first.name, revisions.first.number)
   end
 
 end
