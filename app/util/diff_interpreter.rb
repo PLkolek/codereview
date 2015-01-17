@@ -1,8 +1,6 @@
-class GetDiff
-  def call(review_id)
-    review=Review.find review_id
-    parsed = DiffParser.parse(%x(#{review.diff_command}))
-    chunks = parsed.elements.first.elements.drop 3
+class DiffInterpreter
+  def to_model(diff)
+    chunks = diff.elements.first.elements.drop 3
     result=[]
     last_chunk_end=1
     chunks.each { |chunk|
