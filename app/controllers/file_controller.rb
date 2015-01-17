@@ -1,7 +1,7 @@
 class FileController < ApplicationController
   def index
     respond_to do |format|
-      format.json { render :json => GetDiff.new.call }
+      format.json { render :json => GetDiff.new.call(1) }
     end
   end
   def showMore
