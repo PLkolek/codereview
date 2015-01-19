@@ -1,11 +1,14 @@
 angular.module 'app.exampleApp'
-  .factory 'File',
+.factory 'FileService',
   [
     '$resource',
-    ($resource) ->
+    'File'
+    ($resource, File) ->
       $resource('files.json', {},
         query:
           method: 'GET'
-          isArray: true
+          isArray: false
+          transformResponse: (data, header) ->
+            File.build(angular.fromJson(data))
       )
   ]

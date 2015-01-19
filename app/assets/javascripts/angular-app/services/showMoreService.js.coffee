@@ -3,10 +3,13 @@ angular.module 'app.exampleApp'
 .factory 'ShowMore',
   [
     '$resource',
-    ($resource) ->
+    'Line'
+    ($resource, Line) ->
       $resource('files/showMore.json', {},
         query:
           method: 'POST'
           isArray: true
+          transformResponse: (data, header) ->
+            Line.buildArray(angular.fromJson(data))
       )
   ]
