@@ -1,30 +1,35 @@
 class DiffInterpreter
-  def to_model(diff)
-    chunks = diff.elements.first.elements.drop 3
-    result=[]
-    last_chunk_end=1
-    chunks.each { |chunk|
-      result.concat(transform_chunk(chunk, last_chunk_end))
-      last_chunk_end=chunk.old_end
-    }
-    #FIXME: if line.last_line < total lines
-    result << {:type => :more, :from=>last_chunk_end, :to=>99999999}
-    result
+  def initialize(comments)
+    @comments=comments
   end
 
-  def transform_chunk(chunk, last_chunk_end)
-    result=[]
+  def to_model(diff)
+    chunks = diff.elements.first.elements.drop 3
+    chunks.map { |chunk|
+      Chunk.new(make_lines(chunk),
+                chunk.old_begin,
+                chunk.old_end,
+                chunk.new_begin,
+                chunk.new_end)
+    }
+  end
+
+  def make_lines(chunk)
     line_old=chunk.old_begin
     line_new=chunk.new_begin
-    if chunk.old_begin>last_chunk_end
-      result << {:type => :more, :from => last_chunk_end, :to => chunk.old_begin}
-    end
-    chunk.elements.each { |parsed_line|
-      line = Line.new(parsed_line.content, parsed_line.type, line_new, line_old, '')
-      result<<line.to_hash
-      line_new+=1 if line.type.inNew
-      line_old+=1 if line.type.inOld
+    chunk.elements.map { |parsed_line|
+      type = LineType.new(parsed_line.type)
+      new_no = type.new_no(line_new)
+      old_no = type.old_no(line_old)
+      line_new+=1 if type.inNew
+      line_old+=1 if type.inOld
+
+      Line.new(
+          parsed_line.content,
+          type,
+          new_no,
+          old_no,
+          @comments.find { |c| c.new_no==new_no && c.old_no==old_no } )
     }
-    result
   end
 end

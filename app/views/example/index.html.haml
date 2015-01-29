@@ -1,16 +1,21 @@
 #main(ng-app = 'app.exampleApp' ng-controller = 'ExampleCtrl')
-  %table.code-window
-    %tr.line(ng-repeat='line in file.lines' ng-dblclick='addComment(line)')
-      %td
-        %pre(ng-if='line.isCode() && line.hasOldNo()' class='{{line.type}}') {{line.old_no}}.
-      %td
-        %pre(ng-if='line.isCode() && line.hasNewNo()' class='{{line.type}}') {{line.new_no}}.
-      %td
-        %pre(ng-if='line.isCode()' class='{{line.type}}') {{line.text}}
-        %pre.comment(ng-if='commentVisible(line)') {{line.comment}}
-        %textarea(ng-if='inputOpened(line)'
-                  ng-blur='saveComment(line)'
-                  cr-focusme='focus[line.key()]'
-                  ng-model='line.comment')
-        .show-more(ng-if='line.isShowMore()')
-          %a(ng-click='showMore(line)') Show more
+  .wrapper
+    %div(ng-repeat='chunk in file.chunks')
+      .show-more(ng-if='isShowMoreFirst(chunk)')
+        %a(ng-click='showMore(chunk)') Show more
+      .chunk
+        %table.code-window
+          %tr.line(ng-repeat='line in chunk.lines' ng-dblclick='addComment(line)')
+            %td
+              %pre(ng-if='line.isCode() && line.hasOldNo()' class='{{line.type}}') {{line.old_no}}.
+            %td
+              %pre(ng-if='line.isCode() && line.hasNewNo()' class='{{line.type}}') {{line.new_no}}.
+            %td
+              %pre(ng-if='line.isCode()' class='{{line.type}}') {{line.text}}
+              %pre.comment(ng-if='commentVisible(line)') {{line.comment}}
+              %textarea(ng-if='inputOpened(line)'
+                        ng-blur='saveComment(line)'
+                        cr-focusme='focus[line.key()]'
+                        ng-model='line.comment')
+    .show-more(ng-if='isShowMoreLast')
+      %a(ng-click='showMoreLast(chunk)') Show more

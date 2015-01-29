@@ -3,7 +3,7 @@ angular.module 'app.exampleApp'
   class Line
     constructor: (@text, @type, @new_no, @old_no, @comment, @from, @to)->
     @build: (response) ->
-      new Line(response.text, response.type, response.new_no, response.old_no, response.comment, response.from, response.to)
+      new Line(response.text, response.type, response.new_no, response.old_no, response.comment || "", response.from, response.to)
     @buildArray: (response) ->
       response.map Line.build
     isCode: () -> @type!='more'

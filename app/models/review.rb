@@ -2,16 +2,16 @@ class Review < ActiveRecord::Base
   has_many :revisions
   has_many :text_files
 
-  def lines
+  def chunks
     parsed = DiffParser.parse(%x(#{diff_command}))
-    DiffInterpreter.new.to_model parsed
+    DiffInterpreter.new(Comment.all).to_model parsed
   end
 
   def show_more(from, to, old_new_difference)
     file =%x(#{cat_command})
-    file.lines[from-1...to-1]
+    file.lines[from-1..to-1]
     .each_with_index
-    .map {|line, no| Line.new(line, :no_changes, no+from+old_new_difference, no+from, '').to_hash}
+    .map {|line, no| Line.new(line, LineType.new(:no_changes), no+from+old_new_difference, no+from, '')}
   end
 
   private

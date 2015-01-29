@@ -1,7 +1,7 @@
 class FileController < ApplicationController
   def index
     respond_to do |format|
-      format.json { render :json => Review.find(1).lines }
+      format.json { render :json => Review.find(1).chunks }
     end
   end
   def showMore
@@ -9,15 +9,15 @@ class FileController < ApplicationController
     respond_to do |format|
       format.json { render :json =>
                                Review.find(1).show_more(
-                                   show_more_params[:from],
-                                   show_more_params[:to],
-                                   show_more_params[:old_new_difference]) }
+                                   show_more_params[:from].to_i,
+                                   show_more_params[:to].to_i,
+                                   show_more_params[:old_new_difference].to_i) }
     end
   end
 
   private
   def show_more_params
-    params.require(:file).permit(:from, :to, :old_new_difference)
+    params.permit(:from, :to, :old_new_difference)
   end
 
 end

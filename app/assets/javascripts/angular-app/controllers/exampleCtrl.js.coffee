@@ -10,17 +10,34 @@ angular.module('app.exampleApp').controller("ExampleCtrl", [
     $scope.file = FileService.query()
     $scope.input = {}
     $scope.focus = {}
+    $scope.isShowMoreLast = true
     $scope.addComment = (line) ->
       $scope.input[line.key()] = true
       $scope.focus[line.key()] = true
+
     $scope.commentVisible = (line)-> line.isCode() && !$scope.inputOpened(line) && line.comment!=''
+
     #FIXME: hacky mess
-    $scope.showMore = (line) ->
-      index = $scope.file.lines.indexOf(line)
-      neighbourIndex = if index>0 then index-1 else index+1
-      diff = $scope.file.lines[neighbourIndex].new_no-$scope.file.lines[neighbourIndex].old_no
-      ShowMore.query({ from: line.from, to: line.to, old_new_difference: diff },
-        (res)-> Array.prototype.splice.apply($scope.file.lines, [index, 1].concat(Line.buildArray(res))))
+    $scope.showMore = (chunk) ->
+      if($scope.file.chunks[0]==chunk)
+        ShowMore.query
+            from: 1
+            to: chunk.old_begin-1
+            old_new_difference: chunk.new_begin-chunk.old_begin
+          ,(res)-> chunk.prepend Line.buildArray(res)
+      else
+        previousIndex = $scope.file.chunks.indexOf(chunk) - 1
+        previous = $scope.file.chunks[previousIndex];
+        ShowMore.query
+          from: previous.old_end
+          to: chunk.old_begin-1
+          old_new_difference: chunk.new_begin-chunk.old_begin
+        ,(res)->
+          chunk.prepend Line.buildArray(res)
+          chunk.prependChunk previous
+          $scope.file.chunks.splice(previousIndex, 1)
+
+    $scope.isShowMoreFirst = (chunk) -> $scope.file.chunks[0]!=chunk || chunk.old_begin!=1
 
     $scope.saveComment = (line) ->
       $scope.input[line.key()] = false
