@@ -16,7 +16,9 @@ class Review < ActiveRecord::Base
 
   private
   def diff_command
-    SvnCommand.diff(url, revisions.first.number)
+    command = SvnCommand.diff(url+text_files.first.name, revisions.first.number)
+    logger.debug(command)
+    command
   end
 
   def cat_command

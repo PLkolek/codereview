@@ -10,3 +10,12 @@ angular.module 'app.exampleApp'
     hasOldNo: () -> @old_no?
     hasNewNo: () -> @new_no?
     isShowMore: () -> @type=='more'
+    key: () -> @old_no + ',' + @new_no
+    keyJson: ->
+      old_no: @old_no
+      new_no: @new_no
+    commentJson: ->
+      old_no: @old_no
+      new_no: @new_no
+      content: @comment
+
