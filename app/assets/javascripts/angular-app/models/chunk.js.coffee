@@ -12,6 +12,10 @@ angular.module 'app.exampleApp'
       @lines = lines.concat(@lines)
       @old_begin-=lines.length
       @new_begin-=lines.length
+    append: (lines) ->
+      @lines = @lines.concat(lines)
+      @old_end+=lines.length
+      @new_end+=lines.length
     prependChunk: (chunk) ->
       @lines = chunk.lines.concat(@lines)
       @old_begin-=chunk.old_end-chunk.old_begin

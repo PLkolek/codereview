@@ -36,6 +36,16 @@ angular.module('app.exampleApp').controller("ExampleCtrl", [
           chunk.prepend Line.buildArray(res)
           chunk.prependChunk previous
           $scope.file.chunks.splice(previousIndex, 1)
+    $scope.showMoreLast = ->
+      $scope.isShowMoreLast = false
+      lastChunk = $scope.file.chunks[$scope.file.chunks.length - 1]
+      ShowMore.query
+        from: lastChunk.old_end
+        to: 9999999
+        old_new_difference: lastChunk.new_begin-lastChunk.old_begin
+      , (res) ->
+          lastChunk.append Line.buildArray(res)
+
 
     $scope.isShowMoreFirst = (chunk) -> $scope.file.chunks[0]!=chunk || chunk.old_begin!=1
 

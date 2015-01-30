@@ -12,10 +12,10 @@
               %pre(ng-if='line.isCode() && line.hasNewNo()' class='{{line.type}}') {{line.new_no}}.
             %td
               %pre(ng-if='line.isCode()' class='{{line.type}}') {{line.text}}
-              %pre.comment(ng-if='commentVisible(line)') {{line.comment}}
+              %pre.comment(ng-if='commentVisible(line)') {{line.comment.content}}
               %textarea(ng-if='inputOpened(line)'
                         ng-blur='saveComment(line)'
                         cr-focusme='focus[line.key()]'
                         ng-model='line.comment')
     .show-more(ng-if='isShowMoreLast')
-      %a(ng-click='showMoreLast(chunk)') Show more
+      %a(ng-click='showMoreLast()') Show more
