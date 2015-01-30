@@ -1,6 +1,8 @@
 @exampleApp = angular
   .module('app.exampleApp', [
-    'ngResource'
+    'ngResource',
+    'ngRoute',
+    'templates'
   ])
   .run(->
     console.log 'exampleApp running'
