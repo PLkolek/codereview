@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
+    get '/' => 'application#index'
     get 'example' => 'example#index'
+    get 'reviews' => 'review#index'
     get 'files' => 'file#index'
     post 'files/showMore' => 'file#showMore'
     put 'comments' => 'comment#save'

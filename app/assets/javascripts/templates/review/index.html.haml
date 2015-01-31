@@ -1,0 +1,6 @@
+#main(ng-controller = 'ReviewIndexCtrl')
+  %table
+    %tr
+      %th Name
+    %tr(ng-repeat='review in reviews')
+      %td {{review.name}}

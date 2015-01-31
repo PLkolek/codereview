@@ -2,6 +2,8 @@ class Review < ActiveRecord::Base
   has_many :revisions
   has_many :text_files
 
+  validates_presence_of :name
+
   def chunks
     parsed = DiffParser.parse(%x(#{diff_command}))
     DiffInterpreter.new(Comment.all).to_model parsed
