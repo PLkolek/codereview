@@ -13,10 +13,14 @@
 
   %table.table.table-striped
     %tr
+      %th
       %th Revision
       %th Author
       %th Title
-    %tr(ng-repeat="commit in commits")
+    %tr(ng-repeat="commit in commits" ng-click="changeSelect(commit)")
+      %td
+        %input(type="checkbox" ng-model="commit.selected")
       %td {{commit.revision}}
       %td {{commit.author}}
       %td {{commit.title}}
+  %button.btn.btn-default(type="button" ng-model="" ng-disabled="nothingSelected()")  Review changes
