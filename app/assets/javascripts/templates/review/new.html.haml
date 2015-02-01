@@ -9,7 +9,7 @@
     .form-group
       %label(for="titleInput") Commit title
       %input.form-control#titleInput(placeholder="[TS-123]" ng-model="params.title")
-    %button.btn.btn-default(type="submit" ng-model="" ng-disabled="!params.url")  Search for commits
+    %button.btn.btn-default(type="submit" ng-model="" ng-disabled="!params.url || !commits.$resolved")  Search for commits
 
   %table.table.table-striped
     %tr
