@@ -1,7 +1,7 @@
 class FileController < ApplicationController
   def index
     respond_to do |format|
-      format.json { render :json => Review.find(1).chunks }
+      format.json { render :json => Review.find(index_params[:review_id]).chunks }
     end
   end
   def showMore
@@ -18,6 +18,10 @@ class FileController < ApplicationController
   private
   def show_more_params
     params.permit(:from, :to, :old_new_difference)
+  end
+
+  def index_params
+    params.permit(:review_id)
   end
 
 end

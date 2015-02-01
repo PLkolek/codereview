@@ -1,10 +1,11 @@
 class Review < ActiveRecord::Base
-  has_many :revisions
+  has_many :revisions, -> { order(number: :asc) }
   has_many :text_files
 
   validates_presence_of :name
 
   def chunks
+    #TODO: combined diff instead of range of revisions
     parsed = Parser.diffParser.parse(%x(#{diff_command}))
     DiffInterpreter.new(Comment.all).to_model parsed
   end
@@ -18,7 +19,7 @@ class Review < ActiveRecord::Base
 
   private
   def diff_command
-    command = SvnCommand.diff(url+text_files.first.name, revisions.first.number)
+    command = SvnCommand.diff(url, revisions.first.number, revisions.last.number)
     logger.debug(command)
     command
   end

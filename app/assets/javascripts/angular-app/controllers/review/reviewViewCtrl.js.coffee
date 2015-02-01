@@ -1,12 +1,13 @@
 angular.module('app.exampleApp').controller("ReviewViewCtrl", [
   '$scope',
+  '$routeParams'
   'FileService',
   'ShowMore',
   'Line',
   'CommentService',
-  ($scope, FileService, ShowMore, Line, CommentService)->
+  ($scope, $routeParams, FileService, ShowMore, Line, CommentService)->
 
-    $scope.file = FileService.query()
+    $scope.file = FileService.query({review_id: $routeParams.reviewId })
     $scope.input = {}
     $scope.focus = {}
     $scope.isShowMoreLast = true

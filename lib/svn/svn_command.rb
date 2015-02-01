@@ -1,6 +1,6 @@
 class SvnCommand
-  def self.diff(url, revision_number)
-    "svn diff -r #{revision_number-1}:#{revision_number}  #{url}"
+  def self.diff(url, revision_first, revision_last)
+    "svn diff -r #{revision_first-1}:#{revision_last}  #{url}"
   end
 
   def self.cat(url, file, revision_number)
