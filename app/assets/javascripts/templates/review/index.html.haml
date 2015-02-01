@@ -1,7 +1,6 @@
 #main(ng-controller = 'ReviewIndexCtrl')
   %a.btn.btn-default(href='#/reviews/new') Create review
-  %table
-    %tr
-      %th Name
-    %tr(ng-repeat='review in reviews')
-      %td {{review.name}}
+  %h3 Code reviews
+  %ul
+    %li(ng-repeat='review in reviews')
+      %a(href="#/reviews/{{review.id}}") {{review.name}}
