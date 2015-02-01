@@ -2,10 +2,14 @@ Rails.application.routes.draw do
     get '/' => 'application#index'
     get 'example' => 'example#index'
     get 'reviews' => 'review#index'
+
     get 'files' => 'file#index'
     post 'files/showMore' => 'file#showMore'
+
     put 'comments' => 'comment#save'
     delete 'comments' => 'comment#destroy'
+
+    get 'commits' => 'commit#index'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

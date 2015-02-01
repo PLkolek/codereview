@@ -1,0 +1,22 @@
+#main(ng-controller = 'ReviewNewCtrl')
+  %form.form-inline(ng-submit="search(params)")
+    .form-group
+      %label(for="urlInput") Author
+      %input.form-control#urlInput(placeholder="svn://coolrepo.com" ng-model="params.url")
+    .form-group
+      %label(for="authorInput") Author
+      %input.form-control#authorInput(placeholder="jkowalski" ng-model="params.author")
+    .form-group
+      %label(for="titleInput") Commit title
+      %input.form-control#titleInput(placeholder="[TS-123]" ng-model="params.title")
+    %button.btn.btn-default(type="submit" ng-model="" ng-disabled="!params.url")  Search for commits
+
+  %table.table.table-striped
+    %tr
+      %th Revision
+      %th Author
+      %th Title
+    %tr(ng-repeat="commit in commits")
+      %td {{commit.revision}}
+      %td {{commit.author}}
+      %td {{commit.title}}

@@ -3,8 +3,10 @@ angular.module('app.exampleApp').config(
     $routeProvider
       .when('/reviews',
         templateUrl: 'review/index.html',
-        controller: 'ReviewIndexCtrl',
-      )
+        controller: 'ReviewIndexCtrl')
+      .when('/reviews/new',
+        templateUrl: 'review/new.html',
+        controller: 'ReviewNewCtrl')
       .otherwise
         redirectTo: '/reviews')
 

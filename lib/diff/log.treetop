@@ -1,0 +1,46 @@
+grammar SvnLog
+  rule log
+    separator_line?
+    commit* <Log>
+  end
+
+  rule commit
+    info_line "\n" title separator_line <Commit>
+  end
+
+  rule info_line
+   revision sep author sep date sep number_of_lines "\n" <InfoLine>
+  end
+
+  rule separator_line
+    "-"* "\n"
+  end
+
+  rule revision
+    "r" [0-9]+ <Revision>
+  end
+
+  rule sep
+    " | "
+  end
+
+  rule author
+    (!sep .)* <Author>
+  end
+
+  rule date
+    (!sep .)*
+  end
+
+  rule number_of_lines
+    (!"\n" .)*
+  end
+
+  rule title
+    title_line+ <Title>
+  end
+
+  rule title_line
+    (!separator_line .)* "\n"
+  end
+end
