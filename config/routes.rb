@@ -2,6 +2,7 @@ Rails.application.routes.draw do
     get '/' => 'application#index'
     get 'example' => 'example#index'
     get 'reviews' => 'review#index'
+    post 'reviews' => 'review#create'
 
     get 'files' => 'file#index'
     post 'files/showMore' => 'file#showMore'

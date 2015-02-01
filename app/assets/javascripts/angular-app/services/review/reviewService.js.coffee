@@ -10,5 +10,8 @@ angular.module 'app.exampleApp'
           isArray: true
           transformResponse: (data, header) ->
             Review.buildArray(angular.fromJson(data))
+        create:
+          method: 'POST'
+          isArray: false
       )
   ]

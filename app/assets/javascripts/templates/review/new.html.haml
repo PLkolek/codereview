@@ -9,7 +9,7 @@
     .form-group
       %label(for="titleInput") Commit title
       %input.form-control#titleInput(placeholder="[TS-123]" ng-model="params.title")
-    %button.btn.btn-default(type="submit" ng-model="" ng-disabled="!params.url || !commits.$resolved")  Search for commits
+    %button.btn.btn-default(type="submit" ng-model="button" ng-disabled="!params.url || !commits.$resolved")  Search for commits
 
   %table.table.table-striped
     %tr
@@ -23,4 +23,11 @@
       %td {{commit.revision}}
       %td {{commit.author}}
       %td {{commit.title}}
-  %button.btn.btn-default(type="button" ng-model="" ng-disabled="nothingSelected()")  Review changes
+  %form.form-inline(ng-submit="createReview(name)")
+    .form-group
+      %label(for="nameInput") Name
+      %input.form-control#nameInput(placeholder="Bulbulators" ng-model="name")
+    %button.btn.btn-default(type="submit"
+                            ng-model="button"
+                            ng-disabled="nothingSelected() || !commits.$resolved || !name"
+                          )  Review changes
