@@ -6,6 +6,12 @@ module SvnDiff
   end
 
   class File < Treetop::Runtime::SyntaxNode
+    def name
+      elements.first.elements.first.text_value
+    end
+  end
+
+  class FileName < Treetop::Runtime::SyntaxNode
   end
 
   class SeparatorLine < Treetop::Runtime::SyntaxNode

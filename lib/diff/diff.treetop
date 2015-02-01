@@ -8,7 +8,11 @@ grammar SvnDiff
   end
 
   rule index
-   'Index: ' (!"\n" .)* "\n" <Index>
+   'Index: ' filename "\n" <Index>
+  end
+
+  rule filename
+    (!"\n" .)* <FileName>
   end
 
   rule separator_line

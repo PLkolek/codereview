@@ -1,7 +1,9 @@
 angular.module 'app.exampleApp'
 .factory 'File', ['Chunk', (Chunk)->
   class File
-    constructor: (@chunks) ->
+    constructor: (@name, @chunks) ->
     @build: (response) ->
-      new File(response.map(Chunk.build))
+      new File(response.name, response.chunks.map(Chunk.build))
+    @buildArray: (response) ->
+      response.map File.build
 ]

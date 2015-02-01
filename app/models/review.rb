@@ -4,14 +4,14 @@ class Review < ActiveRecord::Base
 
   validates_presence_of :name
 
-  def chunks
+  def files
     #TODO: combined diff instead of range of revisions
     parsed = Parser.diffParser.parse(%x(#{diff_command}))
     DiffInterpreter.new(Comment.all).to_model parsed
   end
 
-  def show_more(from, to, old_new_difference)
-    file =%x(#{cat_command})
+  def show_more(file_name, from, to, old_new_difference)
+    file =%x(#{cat_command(file_name)})
     file.lines[from-1..to-1]
     .each_with_index
     .map {|line, no| Line.new(line, LineType.new(:no_changes), no+from+old_new_difference, no+from, '')}
@@ -24,8 +24,8 @@ class Review < ActiveRecord::Base
     command
   end
 
-  def cat_command
-    SvnCommand.cat(url, text_files.first.name, revisions.first.number)
+  def cat_command(file_name)
+    SvnCommand.cat(url, file_name, revisions.first.number)
   end
 
 end

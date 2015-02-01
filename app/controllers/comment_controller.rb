@@ -15,12 +15,12 @@ class CommentController < ApplicationController
   end
 
   def comment_key_params
-    {:old_no => comment_params[:old_no], :new_no => comment_params[:new_no], :text_file_id => 1}
+    {:old_no => comment_params[:old_no], :new_no => comment_params[:new_no], :file_name => comment_params[:file_name]}
   end
 
   private
   def comment_params
-    params.permit(:old_no, :new_no, :content)
+    params.permit(:old_no, :new_no, :content, :file_name, :review_id)
   end
 
 end

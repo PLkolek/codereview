@@ -4,7 +4,15 @@ class DiffInterpreter
   end
 
   def to_model(diff)
-    chunks = diff.elements.first.elements.drop 3
+    diff.elements.map { |file| make_file file}
+  end
+
+  private
+  def make_file(file)
+    TextFile.new(file.name, make_chunks(file.elements.drop 3))
+  end
+
+  def make_chunks(chunks)
     chunks.map { |chunk|
       Chunk.new(make_lines(chunk),
                 chunk.old_begin,

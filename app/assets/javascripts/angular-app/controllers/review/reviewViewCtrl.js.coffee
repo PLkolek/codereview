@@ -1,61 +1,78 @@
 angular.module('app.exampleApp').controller("ReviewViewCtrl", [
   '$scope',
   '$routeParams'
+
+
+
   'FileService',
   'ShowMore',
   'Line',
   'CommentService',
   ($scope, $routeParams, FileService, ShowMore, Line, CommentService)->
 
-    $scope.file = FileService.query({review_id: $routeParams.reviewId })
+    $scope.files = FileService.query({review_id: $routeParams.reviewId })
     $scope.input = {}
     $scope.focus = {}
-    $scope.isShowMoreLast = true
-    $scope.addComment = (line) ->
-      $scope.input[line.key()] = true
-      $scope.focus[line.key()] = true
+    $scope.showMoreLastHidden = {}
+    $scope.addComment = (file, line) ->
+      $scope.input[file.name+line.key()] = true
+      $scope.focus[file.name+line.key()] = true
 
-    $scope.commentVisible = (line)-> line.isCode() && !$scope.inputOpened(line) && line.comment!=''
+    $scope.commentVisible = (file, line)-> line.isCode() && !$scope.input[file.name+line.key()] && line.comment!=''
 
     #FIXME: hacky mess
-    $scope.showMore = (chunk) ->
-      if($scope.file.chunks[0]==chunk)
+    $scope.showMore = (file, chunk) ->
+      if(file.chunks[0]==chunk)
         ShowMore.query
             from: 1
             to: chunk.old_begin-1
             old_new_difference: chunk.new_begin-chunk.old_begin
+            file_name: file.name
+            review_id: $routeParams.reviewId
           ,(res)-> chunk.prepend Line.buildArray(res)
       else
-        previousIndex = $scope.file.chunks.indexOf(chunk) - 1
-        previous = $scope.file.chunks[previousIndex];
+        previousIndex = file.chunks.indexOf(chunk) - 1
+        previous = file.chunks[previousIndex];
         ShowMore.query
           from: previous.old_end
           to: chunk.old_begin-1
           old_new_difference: chunk.new_begin-chunk.old_begin
+          file_name: file.name
+          review_id: $routeParams.reviewId
         ,(res)->
           chunk.prepend Line.buildArray(res)
           chunk.prependChunk previous
-          $scope.file.chunks.splice(previousIndex, 1)
-    $scope.showMoreLast = ->
-      $scope.isShowMoreLast = false
-      lastChunk = $scope.file.chunks[$scope.file.chunks.length - 1]
+          file.chunks.splice(previousIndex, 1)
+    $scope.showMoreLast = (file) ->
+      $scope.showMoreLastHidden[file.name] = true
+      lastChunk = file.chunks[file.chunks.length - 1]
       ShowMore.query
         from: lastChunk.old_end
         to: 9999999
         old_new_difference: lastChunk.new_begin-lastChunk.old_begin
+        file_name: file.name
+        review_id: $routeParams.reviewId
       , (res) ->
           lastChunk.append Line.buildArray(res)
 
 
-    $scope.isShowMoreFirst = (chunk) -> $scope.file.chunks[0]!=chunk || chunk.old_begin!=1
+    $scope.isShowMoreFirst = (file, chunk) -> file.chunks[0]!=chunk || chunk.old_begin!=1
 
-    $scope.saveComment = (line) ->
-      $scope.input[line.key()] = false
+    $scope.saveComment = (file, line) ->
+      $scope.input[file.name+line.key()] = false
       if line.comment!=""
-        CommentService.save(line.commentJson())
+        CommentService.save(
+          old_no:   line.old_no
+          new_no:   line.new_no
+          file_name:file.name
+          content:  line.comment
+          review_id: $routeParams.reviewId
+        )
       else
-        CommentService.delete(line.keyJson())
-
-    $scope.inputOpened = (line) -> $scope.input[line.key()]
-    $scope.hasFocus = (line) -> $scope.focus[line.key()]
+        CommentService.delete(
+          old_no:   line.old_no
+          new_no:   line.new_no
+          file_name:file.name
+          review_id: $routeParams.reviewId
+        )
 ])
