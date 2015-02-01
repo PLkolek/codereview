@@ -1,6 +1,6 @@
 class Review < ActiveRecord::Base
   has_many :revisions, -> { order(number: :asc) }
-  has_many :text_files
+  has_many :comments
 
   validates_presence_of :name
 

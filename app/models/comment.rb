@@ -1,3 +1,3 @@
 class Comment < ActiveRecord::Base
-  belongs_to :text_file
+  belongs_to :review
 end

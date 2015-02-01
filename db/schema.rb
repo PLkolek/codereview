@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150201171933) do
+ActiveRecord::Schema.define(version: 20150201205206) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(version: 20150201171933) do
     t.integer  "old_no"
     t.integer  "new_no"
     t.string   "file_name"
+    t.integer  "review_id"
   end
 
   add_index "comments", ["old_no", "new_no"], name: "index_comments_on_old_no_and_new_no", unique: true, using: :btree

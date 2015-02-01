@@ -15,7 +15,11 @@ class CommentController < ApplicationController
   end
 
   def comment_key_params
-    {:old_no => comment_params[:old_no], :new_no => comment_params[:new_no], :file_name => comment_params[:file_name]}
+    {:old_no => comment_params[:old_no],
+     :new_no => comment_params[:new_no],
+     :file_name => comment_params[:file_name],
+     :review_id => comment_params[:review_id]
+    }
   end
 
   private
