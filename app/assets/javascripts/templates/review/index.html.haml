@@ -4,3 +4,4 @@
   %ul
     %li(ng-repeat='review in reviews')
       %a(href="#/reviews/{{review.id}}") {{review.name}}
+      %button.btn.btn-xs.btn-danger(type="button" ng-click="delete(review)") X

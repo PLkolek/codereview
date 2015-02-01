@@ -17,6 +17,13 @@ class ReviewController < ApplicationController
     end
   end
 
+  def delete
+    Review.delete(params[:review_id])
+    respond_to do |format|
+      format.all { head :ok, content_type: 'text/html' }
+    end
+  end
+
   private
   def review_params
     params.permit(:url, :name, :revisions => [])

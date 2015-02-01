@@ -3,6 +3,7 @@ Rails.application.routes.draw do
     get 'example' => 'example#index'
     get 'reviews' => 'review#index'
     post 'reviews' => 'review#create'
+    delete 'reviews' => 'review#delete'
 
     get 'files' => 'file#index'
     post 'files/showMore' => 'file#showMore'

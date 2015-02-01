@@ -13,5 +13,8 @@ angular.module 'app.exampleApp'
         create:
           method: 'POST'
           isArray: false
+        delete:
+          method: 'DELETE'
+          isArray: false
       )
   ]
