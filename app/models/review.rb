@@ -5,7 +5,7 @@ class Review < ActiveRecord::Base
   validates_presence_of :name
 
   def chunks
-    parsed = Parser.parse(%x(#{diff_command}))
+    parsed = Parser.diffParser.parse(%x(#{diff_command}))
     DiffInterpreter.new(Comment.all).to_model parsed
   end
 

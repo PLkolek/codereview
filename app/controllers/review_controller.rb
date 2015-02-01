@@ -13,7 +13,7 @@ class ReviewController < ApplicationController
     review.revisions=revisions
     review.save
     respond_to do |format|
-      format.all { head :ok, content_type: 'text/html' }
+      format.json { render :json => { id: review.id } }
     end
   end
 

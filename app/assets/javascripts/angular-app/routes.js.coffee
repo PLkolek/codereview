@@ -7,6 +7,9 @@ angular.module('app.exampleApp').config(
       .when('/reviews/new',
         templateUrl: 'review/new.html',
         controller: 'ReviewNewCtrl')
+      .when('/reviews/:reviewId',
+        templateUrl: 'review/view.html',
+        controller: 'ReviewViewCtrl')
       .otherwise
         redirectTo: '/reviews')
 

@@ -1,11 +1,10 @@
-angular.module('app.exampleApp').controller("ExampleCtrl", [
+angular.module('app.exampleApp').controller("ReviewViewCtrl", [
   '$scope',
   'FileService',
   'ShowMore',
   'Line',
   'CommentService',
   ($scope, FileService, ShowMore, Line, CommentService)->
-    console.log 'ExampleCtrl running'
 
     $scope.file = FileService.query()
     $scope.input = {}

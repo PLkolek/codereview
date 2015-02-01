@@ -1,8 +1,9 @@
 angular.module('app.exampleApp').controller("ReviewNewCtrl", [
   '$scope',
+  '$location',
   'CommitService',
   'ReviewService'
-  ($scope, CommitService, ReviewService) ->
+  ($scope, $location, CommitService, ReviewService) ->
     $scope.commits = []
     $scope.commits.$resolved = true
 
@@ -19,10 +20,12 @@ angular.module('app.exampleApp').controller("ReviewNewCtrl", [
       commit.selected = !commit.selected
 
     $scope.createReview = (name) ->
-      ReviewService.create(
+      reviewId = ReviewService.create(
         url: $scope.searchedUrl
         revisions: $scope.commits.filter((c)->c.selected).map((c)->c.revision[1..-1])
         name: name
+      , ->
+        $location.path("/reviews/#{reviewId.id}")
       )
 
 ])
