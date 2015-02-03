@@ -1,9 +1,6 @@
 angular.module('app.exampleApp').controller("ReviewViewCtrl", [
   '$scope',
   '$routeParams'
-
-
-
   'FileService',
   'ShowMore',
   'Line',
