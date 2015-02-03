@@ -1,0 +1,25 @@
+#main(ng-controller = 'ReviewViewCtrl')
+  .wrapper
+    %div(ng-repeat='file in files')
+      %h3 {{file.name}}
+      %div(ng-repeat='chunk in file.chunks')
+        .show-more(ng-if='isShowMoreFirst(file, chunk)')
+          %a(ng-click='showMore(file, chunk)') Show more
+        .chunk
+          %table.code-window
+            %tr.line(ng-repeat='line in chunk.lines' ng-dblclick='addComment(file, line)' class='{{line.type}}')
+              %td
+                %pre.pre-no-bootstrap(ng-if='line.isCode() && line.hasOldNo()') {{line.old_no}}.
+              %td
+                %pre.pre-no-bootstrap(ng-if='line.isCode() && line.hasNewNo()') {{line.new_no}}.
+              %td
+                %pre.pre-no-bootstrap(ng-if='line.isCode()') {{line.text}}
+                %pre.comment(ng-if='commentVisible(file, line)') {{line.comment}}
+                %textarea(ng-if='input[file.name+line.key()]'
+                          ng-blur='saveComment(file, line)'
+                          cr-focusme='focus[file.name+line.key()]'
+                          ng-model='line.comment')
+      .show-more(ng-if='!showMoreLastHidden[file.name]')
+        %a(ng-click='showMoreLast(file)') Show more
+  %div
+    %a.btn.btn-default(href="#/reviews") Finish
