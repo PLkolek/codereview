@@ -10,7 +10,7 @@ class Commit
 
   def self.find(params)
     raise "url must be filled" if params[:url].blank?
-    log = %x(#{SvnCommand.log(params[:url], params[:author], params[:title])})
+    log = FakeSvn.log(params[:url], params[:author], params[:title])
     LogInterpreter.new.to_model Parser.logParser.parse(log)
   end
 end

@@ -49,7 +49,7 @@ angular.module('app.exampleApp').controller("ReviewViewCtrl", [
       ShowMore.query
         from: lastChunk.old_end
         to: 9999999
-        old_new_difference: lastChunk.new_begin-lastChunk.old_begin
+        old_new_difference: lastChunk.new_end-lastChunk.old_end
         file_name: file.name
         review_id: $routeParams.reviewId
       , (res) ->
