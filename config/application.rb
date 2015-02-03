@@ -20,5 +20,6 @@ module Codereview
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
     config.autoload_paths << Rails.root.join('lib/diff') << Rails.root.join('lib/svn') << Rails.root.join('app/util')
+    config.serve_static_assets = true
   end
 end
