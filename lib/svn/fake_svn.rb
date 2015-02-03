@@ -22,7 +22,7 @@ Index: java/Changes.txt
 --- java/Changes.txt	(wersja 687110)
 +++ java/Changes.txt	(wersja 687111)
 @@ -12,3 +12,6 @@
-
+  
    ZOOKEEPER-111. Significant cleanup of existing tests. (Patrick Hunt via
    mahadev)
 +
